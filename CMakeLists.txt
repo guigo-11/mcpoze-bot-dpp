@@ -1,11 +1,16 @@
 cmake_minimum_required (VERSION 3.15)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake)
-set(BOT_NAME "templatebot")
+set(BOT_NAME "mcpoze")
 
 project(${BOT_NAME})
-aux_source_directory("src" coresrc)
-add_executable(${BOT_NAME} ${coresrc})
+file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.c"
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc"
+)
+
+add_executable(${BOT_NAME} ${SRC_FILES})
 
 string(ASCII 27 Esc)
 
@@ -36,6 +41,7 @@ endif()
 
 target_include_directories(${BOT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/src
     ${OPENSSL_INCLUDE_DIR}
 )
 
